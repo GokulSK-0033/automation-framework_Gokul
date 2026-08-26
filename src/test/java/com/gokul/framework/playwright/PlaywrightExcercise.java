@@ -26,6 +26,6 @@ public class PlaywrightExcercise {
         System.out.println(flipkart.url());
 
         amazon.close();
-        playwright.close();
+//        playwright.close();
     }
 }

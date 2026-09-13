@@ -1,5 +1,6 @@
 package com.gokul.framework.driver;
 
+import com.gokul.framework.config.ConfigReader;
 import com.microsoft.playwright.*;
 
 public class BrowserManager {
@@ -13,12 +14,37 @@ public class BrowserManager {
 
         playwright = Playwright.create();
 
-        browser = playwright.chromium().launch(
-                new BrowserType.LaunchOptions().setHeadless(false)
+        boolean headless = Boolean.parseBoolean(
+                ConfigReader.getProperty("headless")
         );
 
-        context = browser.newContext();
+        String browserName = ConfigReader.getProperty("browser");
 
+        if (browserName.equalsIgnoreCase("chromium")) {
+
+            browser = playwright.chromium().launch(
+                    new BrowserType.LaunchOptions().setHeadless(headless)
+            );
+
+        } else if (browserName.equalsIgnoreCase("firefox")) {
+
+            browser = playwright.firefox().launch(
+                    new BrowserType.LaunchOptions().setHeadless(headless)
+            );
+
+        } else if (browserName.equalsIgnoreCase("webkit")) {
+
+            browser = playwright.webkit().launch(
+                    new BrowserType.LaunchOptions().setHeadless(headless)
+            );
+
+        } else {
+            throw new IllegalArgumentException(
+                    "Unsupported browser: " + browserName
+            );
+        }
+
+        context = browser.newContext();
         page = context.newPage();
     }
 

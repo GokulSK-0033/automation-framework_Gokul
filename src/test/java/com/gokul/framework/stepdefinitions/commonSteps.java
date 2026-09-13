@@ -4,8 +4,6 @@ import com.gokul.framework.pages.HomePage;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class commonSteps {
     HomePage homePage=new HomePage();
     @Given("I navigate to Homepage")
